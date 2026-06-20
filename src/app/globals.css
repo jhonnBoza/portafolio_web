@@ -1,0 +1,237 @@
+@import "tailwindcss";
+
+/* ===== Jayden-style theme (orange) ===== */
+:root {
+  --black: #000000;
+  --white: #ffffff;
+  --bg: #060606;
+  --card: #111111;
+  --card-2: #191919;
+  --line: rgba(255, 255, 255, 0.15);
+  --line-soft: rgba(255, 255, 255, 0.08);
+  --muted: #bbbbbb;
+  --muted-2: #808080;
+  --primary: #c1121f;
+  --grad: linear-gradient(136.55deg, #e11d2a 5.49%, #7a0d12 100%);
+  --grad-radial: radial-gradient(50% 50% at 50% 50%, #a01818 0%, #5f0a0e 100%);
+}
+
+@theme inline {
+  --color-background: var(--bg);
+  --color-foreground: var(--white);
+  --font-head: var(--font-rajdhani);
+  --font-body: var(--font-poppins);
+  --font-script: var(--font-dancing);
+}
+
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--white);
+  font-family: var(--font-poppins), sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ===== Animated moving background (red liquid / aurora) ===== */
+.animated-bg {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  background: #060606;
+  pointer-events: none;
+}
+.animated-bg::before,
+.animated-bg::after {
+  content: '';
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(90px);
+  opacity: 0.55;
+  will-change: transform;
+}
+.animated-bg::before {
+  width: 55vw;
+  height: 55vw;
+  top: -10%;
+  left: -5%;
+  background: radial-gradient(circle at 30% 30%, #a01818 0%, #5f0a0e 45%, transparent 70%);
+  animation: blob-1 18s ease-in-out infinite;
+}
+.animated-bg::after {
+  width: 50vw;
+  height: 50vw;
+  bottom: -15%;
+  right: -10%;
+  background: radial-gradient(circle at 60% 40%, #c1121f 0%, #6e0d12 45%, transparent 70%);
+  animation: blob-2 22s ease-in-out infinite;
+}
+/* third blob via a span inside */
+.animated-bg .blob-3 {
+  position: absolute;
+  width: 40vw;
+  height: 40vw;
+  top: 35%;
+  left: 45%;
+  border-radius: 50%;
+  filter: blur(110px);
+  opacity: 0.4;
+  background: radial-gradient(circle at 50% 50%, #7a0d12 0%, transparent 65%);
+  animation: blob-3 26s ease-in-out infinite;
+  will-change: transform;
+}
+/* subtle grain/vignette overlay */
+.animated-bg .vignette {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at center, transparent 40%, rgba(0,0,0,0.6) 100%);
+}
+
+@keyframes blob-1 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33%      { transform: translate(12vw, 8vh) scale(1.15); }
+  66%      { transform: translate(-6vw, 14vh) scale(0.95); }
+}
+@keyframes blob-2 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33%      { transform: translate(-14vw, -10vh) scale(1.1); }
+  66%      { transform: translate(8vw, -6vh) scale(1.2); }
+}
+@keyframes blob-3 {
+  0%, 100% { transform: translate(-50%, -50%) scale(1); }
+  50%      { transform: translate(-35%, -60%) scale(1.25); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animated-bg::before,
+  .animated-bg::after,
+  .animated-bg .blob-3 { animation: none; }
+}
+
+h1, h2, h3, h4, h5, h6, .font-head {
+  font-family: var(--font-rajdhani), sans-serif;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: #2a2a2a; border-radius: 3px; }
+
+/* ---- Typography helpers ---- */
+.text-display {
+  font-family: var(--font-rajdhani), sans-serif;
+  font-weight: 700;
+  font-size: clamp(3rem, 6vw, 6rem);
+  line-height: 0.98;
+  letter-spacing: -0.03em;
+}
+.text-display-2 {
+  font-family: var(--font-rajdhani), sans-serif;
+  font-weight: 700;
+  font-size: clamp(3.5rem, 6vw, 6rem);
+  line-height: 1;
+  letter-spacing: -0.04em;
+}
+
+.gradient-text {
+  background: var(--grad);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* small label with leading dot */
+.dot-before {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+.dot-before::before {
+  content: '';
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--primary);
+  flex-shrink: 0;
+}
+
+/* ---- Cards ---- */
+.card-inset {
+  background: var(--card);
+  border-radius: 24px;
+  box-shadow: 0 0 20px 0 rgba(103, 103, 103, 0.25) inset;
+}
+
+/* pill tag */
+.tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 24px;
+  border-radius: 99px;
+  background: rgba(37, 37, 37, 0.5);
+  color: #ddd;
+  font-size: 0.9rem;
+  transition: background .25s, color .25s;
+  cursor: default;
+}
+.tag:hover { background: #fff; color: #000; }
+
+/* primary pill button */
+.btn-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 32px;
+  border-radius: 99px;
+  background: var(--grad);
+  color: #fff;
+  font-weight: 600;
+  font-size: 0.95rem;
+  transition: opacity .25s, transform .25s;
+}
+.btn-pill:hover { opacity: .92; transform: translateY(-1px); }
+
+.btn-outline {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 32px;
+  border-radius: 99px;
+  border: 1px solid var(--line);
+  color: #fff;
+  font-weight: 600;
+  font-size: 0.95rem;
+  transition: background .25s, border-color .25s;
+}
+.btn-outline:hover { background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.3); }
+
+/* section number heading row */
+.sec-head {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 56px;
+}
+.sec-head .num {
+  font-family: var(--font-rajdhani), sans-serif;
+  color: var(--primary);
+  font-weight: 700;
+}
+.sec-head .line { flex: 1; height: 1px; background: var(--line-soft); }
+.sec-head .label {
+  color: var(--muted-2);
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  font-size: 0.75rem;
+}
+
+.script {
+  font-family: var(--font-dancing), cursive;
+  font-weight: 700;
+}
