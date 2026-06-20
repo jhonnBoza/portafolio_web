@@ -63,7 +63,7 @@ export const personalInfo = {
   instagram: 'https://www.instagram.com/jhnnz.7/',
   facebook: 'https://www.facebook.com/jhon.bz.52/',
   tiktok: 'https://www.tiktok.com/@jhnnvxz_1',
-  siteUrl: 'https://jhonnboza.dev',
+  siteUrl: 'https://my-portfolio-alpha-weld-5qo9nfjoql.vercel.app',
   avatar: 'https://avatars.githubusercontent.com/u/168006484?v=4',
   photo: '/jhon.jpg',
 };
